@@ -2377,7 +2377,7 @@ class Core(commands.commands._RuleDropper, commands.Cog, CoreLogic):
         await ctx.send(
             _(
                 "You seem to be attempting to sync after recently syncing. Discord does not like it "
-                "when bots sync more often than neccecary, so this command has a cooldown. You "
+                "when bots sync more often than necessary, so this command has a cooldown. You "
                 "should enable/disable all commands you want to change first, and run this command "
                 "one time only after all changes have been made. "
             )
@@ -4446,8 +4446,6 @@ class Core(commands.commands._RuleDropper, commands.Cog, CoreLogic):
     async def helpset_maxpages(self, ctx: commands.Context, pages: int):
         """Set the maximum number of help pages sent in a server channel.
 
-        Note: This setting does not apply to menu help.
-
         If a help message contains more pages than this value, the help message will
         be sent to the command author via DM. This is to help reduce spam in server
         text channels.
@@ -4535,8 +4533,11 @@ class Core(commands.commands._RuleDropper, commands.Cog, CoreLogic):
         The maximum tagline length is 2048 characters.
         This setting only applies to embedded help. If no tagline is specified, the default will be used instead.
 
+        You can use `[\u200bp]` in your tagline, which will be replaced by the bot's prefix.
+
         **Examples:**
         - `[p]helpset tagline Thanks for using the bot!`
+        - `[p]helpset tagline Use [\u200bp]invite to add me to your server.`
         - `[p]helpset tagline` - Resets the tagline to the default.
 
         **Arguments:**
