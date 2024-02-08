@@ -1,0 +1,71 @@
+namespace: Red-DiscordBot
+
+postgres-db:
+  defines: runnable
+  inherits: postgresql/db
+  metadata:
+    name: postgres-db
+    description: >-
+      PostgreSQL database service required by Red Discord Bot for data
+      persistence.
+    icon: https://www.postgresql.org/media/img/about/press/elephant.png
+  variables:
+    db_name:
+      type: string
+      value: monk
+      description: ''
+    db_pass:
+      type: string
+      value: adminpassword
+      description: ''
+    db_user:
+      type: string
+      value: monk
+      description: ''
+
+red-discord-bot:
+  defines: runnable
+  metadata:
+    name: red-discord-bot
+    description: Main service for the Red Discord Bot application.
+    icon: https://emojiapi.dev/api/v1/robot.svg
+  containers:
+    red-discord-bot:
+      image: env-4641.registry.local/red-discord-bot:V3_develop-b041ha
+      build: .
+      dockerfile: Dockerfile.red-discord-bot
+  services:
+    http-server:
+      description: HTTP server port for the Red Discord Bot service.
+      container: red-discord-bot
+      port: 80
+      host-port: 80
+      publish: true
+      protocol: tcp
+  connections:
+    database-connection:
+      target: Red-DiscordBot/postgres-db
+      service: postgres
+      optional: true
+      description: Connection to the PostgreSQL database used for data persistence.
+  variables:
+    config-foo-bar:
+      env: CONFIG_FOO_BAR
+      type: string
+      value: example_value
+      description: >-
+        Example configuration variable used in 'config.get_raw' method to
+        demonstrate accessing nested configuration data.
+
+stack:
+  defines: group
+  members:
+    - Red-DiscordBot/postgres-db
+    - Red-DiscordBot/red-discord-bot
+  metadata:
+    name: Red Discord Bot
+    description: >-
+      A self-hosted, fully modular, and customizable Discord bot written in
+      Python, capable of functioning as an admin bot, music bot, trivia bot, and
+      more.
+    icon: https://emojiapi.dev/api/v1/robot.svg
