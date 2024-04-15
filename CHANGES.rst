@@ -1,5 +1,84 @@
 .. Red changelogs
 
+Redbot 3.5.8 (2024-04-01)
+=========================
+
+| Thanks to all these amazing people that contributed to this release:
+| :ghuser:`aikaterna`, :ghuser:`Flame442`, :ghuser:`Jackenmen`, :ghuser:`Kreusada`, :ghuser:`TrustyJAID`
+
+Read before updating
+--------------------
+
+#. Server-wide mutes in the Mutes cog can no longer be performed using channel permissions (overrides). Instead, the cog will now use Discord's native server timeout functionality when a mute role is not set. Role mutes and channel-specific mutes are not affected.
+
+    Red 3.5.7 and lower allowed usage of channel permissions (overrides) for server-wide mutes when ``[p]muteset forcerole`` setting was explicitly disabled and no mute role was set for the server. This behavior is no longer available and now, when mute role is not set, server-wide mutes will be performed using Discord's native server timeouts.
+
+    If you were one of the few users that chose to use channel permissions (overrides) for server-wide mutes, please note that the existing server mutes will now be considered channel-specific mutes and can only be removed with ``[p]channelunmute`` (and will be automatically removed after timeout elapses, if they have one set). If you want to quickly remove all channel-specific mutes (that were previously server-wide mutes) for a user, you can use the hidden ``[p]forceunmute <user>`` command that has been provided to ease the migration.
+
+#. Information for Audio users that are using an external Lavalink instance (if you don't know what that is, you should skip this point):
+
+    Red 3.5.8 uses a new Lavalink jar that you will need to manually update from `our GitHub <https://github.com/Cog-Creators/Lavalink-Jars/releases/tag/3.7.11%2Bred.2>`__.
+
+End-user changelog
+------------------
+
+Additions
+*********
+
+- |cool| **Cogs - Mutes** - Added support for Discord's native server timeouts. The cog will now use those when a mute role is not set or, when the new ``[p]timeout`` command is used (:issue:`5604`)
+- **Cogs - Trivia** - Trivia lists can now have a description as documented in :ref:`guide_trivia_list_creation` (:issue:`5897`)
+- |cool| **Cogs - Trivia** - Added ``[p]trivia info`` command for getting information about the specified Trivia list, including its setting overrides (:issue:`3978`, :issue:`5897`)
+
+Changes
+*******
+
+- **Core - Bot Commands** - The ``[p]addpath`` command will now detect potentially incorrect paths and prompt for confirmation (:issue:`6330`)
+- **Core - Bot Commands** - The ``[p]addpath`` command will now error out when the user tries adding a path that's part of the core path or instance's data path (:issue:`6330`)
+- **Core - Dependencies** - Red's dependencies have been bumped (:issue:`6333`)
+- **Cogs - Audio** - The cog will now log the reason for Lavalink.jar being re-downloaded (:issue:`6334`)
+- |cool| **Cogs - Mutes** - The ``[p]activemutes`` command will now use menus for pagination (:issue:`6266`)
+
+Removals
+********
+
+- **Cogs - Mutes** - Server-wide mutes can no longer be performed using channel permissions (overrides). Server timeouts or mute role can be used instead (:issue:`5604`)
+- **Cogs - Mutes** - The ``[p]muteset forcerole`` command and the setting it adjusted has been removed. Server timeouts will now be used for a server, if it has no mute role set (:issue:`5604`)
+
+Fixes
+*****
+
+- |cool| **Cogs - Audio** - Resolves recent issues where the wrong video was served for YT playback (:issue:`6337`, :issue:`6340`)
+- **Cogs - Audio** - Fixed Lavalink.jar downloading for RC and Red-specific versions (:issue:`6334`)
+
+Documentation changes
+---------------------
+
+Additions
+*********
+
+- |cool| Added install instructions for Amazon Linux 2023 (:issue:`6331`)
+
+----
+
+Redbot 3.5.7 (2024-03-24)
+=========================
+
+| Thanks to all these amazing people that contributed to this release:
+| :ghuser:`aikaterna`, :ghuser:`Flame442`, :ghuser:`karlsbjorn`, :ghuser:`Jackenmen`
+
+This is a hotfix release fixing a bug with Red's reaction-based menus introduced in the previous release.
+
+End-user changelog
+------------------
+
+Fixes
+*****
+
+- **Core** - Fixed an issue with Red's reaction-based menus *with custom controls* not working properly (:issue:`6324`)
+- **Core - Bot Commands** - Updated supported image formats in ``[p]set bot avatar``'s error messages to include GIFs (:issue:`6323`)
+
+----
+
 Redbot 3.5.6 (2024-03-22)
 =========================
 
@@ -63,12 +142,12 @@ Changes
 - **Core - Utils Package** - The `menu()` utility function received a new `provisional <developer-guarantees-exclusions>` ``user`` parameter for defining who can interact with the menu (instead of the default ``ctx.author``) (:issue:`4913`)
 
     If no issues arise, we plan on including this parameter under developer guarantees
-    in the first release made after 2024-05-18.
+    in the first release made after 2024-05-24.
 
 - **Core - Utils Package** - The `SimpleMenu.start()` method received a new `provisional <developer-guarantees-exclusions>` ``user`` parameter for defining who can interact with the menu (instead of the default ``ctx.author``) (:issue:`4913`)
 
     If no issues arise, we plan on including this parameter under developer guarantees
-    in the first release made after 2024-05-18.
+    in the first release made after 2024-05-24.
 
 Fixes
 *****
